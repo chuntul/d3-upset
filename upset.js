@@ -30,7 +30,7 @@ function helperUpset(start, end, numSets, names, data) {
   else {
     var intSet = {
       "set": data[data.length-1].set + end.toString(),
-      "names": findIntersection(data[data.length-2].names, names[end])
+      "names": findIntersection(data[data.length-1].names, names[end])
     }
     data.push(intSet)
     return helperUpset(start, end+1, numSets, names, data)
