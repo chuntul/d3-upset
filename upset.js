@@ -23,6 +23,26 @@ Array.prototype.diff = function(a) {
     return this.filter(function(i) {return a.indexOf(i) < 0;});
 };
 
+//for calculating solo datasets
+function subtractUpset(i, inds, names) {
+  var result = names[i].slice(0)
+  for (var ind = 0; ind < inds.length; ind++) {
+    // set1 vs set2 -> names[i] vs names[ind]
+    for (var j = 0; j < names[inds[ind]].length; j++) { // for each element in set2
+      if (result.includes(names[inds[ind]][j])) { 
+        // if result has the element, remove the element
+        // else, ignore
+        var index = result.indexOf(names[inds[ind]][j])
+        if (index > -1) {
+          result.splice(index, 1)
+        }
+      }
+    }
+  }
+  return result
+}
+
+//recursively gets the intersection for each dataset
 function helperUpset(start, end, numSets, names, data) {
   if (end == numSets) {
     return data
@@ -30,13 +50,12 @@ function helperUpset(start, end, numSets, names, data) {
   else {
     var intSet = {
       "set": data[data.length-1].set + end.toString(),
-      "names": findIntersection(data[data.length-2].names, names[end])
+      "names": findIntersection(data[data.length-1].names, names[end])
     }
     data.push(intSet)
     return helperUpset(start, end+1, numSets, names, data)
   }
 }
-
 
 function makeUpset(sets, names) { // names: [[],[]]
   //number of circles to make
@@ -51,14 +70,16 @@ function makeUpset(sets, names) { // names: [[],[]]
     left: 100
   };
   var width = 600;
-  var height = 500;
+  var height=500;
   
 
   // make the canvas
-  var svg = d3.select("body") 
+  var svg = d3.select("#venn") 
       .append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
+      .attr("xmlns", "http://www.w3.org/2000/svg")
+      .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
       .append("g")
           .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")")
@@ -81,9 +102,7 @@ function makeUpset(sets, names) { // names: [[],[]]
   var rad = 13,
   height = 400;
 
-
-
-  // computes intersections UNMANUALLY! goes up to  5 sets
+  // computes intersections
   var data2 = []
     
   for (var i = 0; i < numSets; i++) {
@@ -100,11 +119,30 @@ function makeUpset(sets, names) { // names: [[],[]]
       }
       data2.push(intSet2)
       helperUpset(i, j+1, numSets, names, data2)
-      
     }
-    
   }
 
+  //removing all solo datasets and replacing with data just in those datasets (cannot intersect with others)
+  var tempData = []
+  for (var i = 0; i < data2.length; i++) {
+    if (data2[i].set.length != 1) { // solo dataset
+      tempData.push(data2[i])
+    }
+  }
+  data2 = tempData
+
+  for (var i = 0; i < numSets; i++) {
+    var inds = Array.apply(null, {length: numSets}).map(Function.call, Number)
+    var index = inds.indexOf(i)
+    if (index > -1) {
+      inds.splice(index, 1);
+    }
+    var result = subtractUpset(i, inds, names)
+    data2.push({
+      "set": i.toString(),
+      "names": result
+    })
+  }
 
   // makes sure data is unique
   var unique = []
@@ -118,8 +156,8 @@ function makeUpset(sets, names) { // names: [[],[]]
 
   var data = newData
 
-  // makes JSON objects for easy data parsing
-  // also makes dataset labels
+
+  // making dataset labels
   for (var i = 0; i < numSets; i++) {
 
     upsetCircles.append("text")
@@ -217,10 +255,6 @@ function makeUpset(sets, names) { // names: [[],[]]
         })
             .style('fill', "darkslategrey")
             .attr('height',function(d){ return height - yrange(d.names.length); })
-        
-      
-
-
 
   //circles
   for (var i = 0; i < data.length; i++) {
@@ -253,7 +287,4 @@ function makeUpset(sets, names) { // names: [[],[]]
       
     }
   }
-
-
-
 }
