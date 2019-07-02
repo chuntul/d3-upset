@@ -130,6 +130,7 @@ function makeUpset(sets, names) { // names: [[],[]]
     }
   }
   data2 = tempData
+  
 
   for (var i = 0; i < numSets; i++) {
     var inds = Array.apply(null, {length: numSets}).map(Function.call, Number)
@@ -137,12 +138,14 @@ function makeUpset(sets, names) { // names: [[],[]]
     if (index > -1) {
       inds.splice(index, 1);
     }
+    console.log(inds)
     var result = subtractUpset(i, inds, names)
     data2.push({
       "set": i.toString(),
-      "names": result
+      "names": names[i]
     })
   }
+
 
   // makes sure data is unique
   var unique = []

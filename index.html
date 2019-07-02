@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="upset.js"></script>
+
+</head>
+<style>
+
+  body { 
+    font: 15px Arial;
+  }
+
+</style>
+<body>
+        <div id="venn"></div>
+  <script>
+    var sets = ["set1", "set2", "set3", "set4"]
+    var items = [
+                    ["a","b","c","d"],
+                    ["a","b","c","d", "e", "f"],
+                    ["a","b","g", "h", "i"],
+                    ["a","i", "j","c","d"]
+                ]
+    makeUpset(sets,items)
+  </script>
+  
+</body>
