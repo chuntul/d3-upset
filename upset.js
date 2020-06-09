@@ -138,7 +138,6 @@ function makeUpset(sets, names) { // names: [[],[]]
     if (index > -1) {
       inds.splice(index, 1);
     }
-    console.log(inds)
     var result = subtractUpset(i, inds, names)
     data2.push({
       "set": i.toString(),
@@ -177,6 +176,7 @@ function makeUpset(sets, names) { // names: [[],[]]
     return parseFloat(b.names.length) - parseFloat(a.names.length);
   });
 
+  console.log(data)
   // make the bars
   var upsetBars = svg.append("g")
     .attr("id", "upsetBars")

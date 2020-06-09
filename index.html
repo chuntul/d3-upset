@@ -2,8 +2,9 @@
 <meta charset="utf-8">
 <head>
 
-  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-  <script src="upset.js"></script>
+  <script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+  <script src="newUpset.js"></script>
+  <script src="formatData.js"></script>
 
 </head>
 <style>
@@ -14,16 +15,40 @@
 
 </style>
 <body>
-        <div id="venn"></div>
+        <div id="upsetPlot"></div>
   <script>
-    var sets = ["set1", "set2", "set3", "set4"]
-    var items = [
-                    ["a","b","c","d"],
-                    ["a","b","c","d", "e", "f"],
-                    ["a","b","g", "h", "i"],
-                    ["a","i", "j","c","d"]
-                ]
-    makeUpset(sets,items)
+    const data = [
+      {
+        "name": "set1",
+        "values": ["a","b","c","d"]
+      },
+      {
+        "name": "set2",
+        "values": ["a","b","c","d", "e", "f"]
+      },
+      {
+        "name": "set3",
+        "values": ["a","b","g", "h", "i"]
+      },
+      {
+        "name": "set4",
+        "values": ["a","i", "j","c","d"]
+      }
+    ];
+    // calculating intersections WITHOUT solo sets
+    const {intersections, soloSets} = formatIntersectionData(data); 
+
+    // putting the solo sets in:
+    // to include solo sets with all its data, call this function
+    const allData = insertSoloDataAll(intersections, soloSets);
+
+    // to include solo sets with only the values that ARE NOT in other sets
+    // ie. the outersect of values in the solo sets, call this function
+    // const allData = insertSoloDataOutersect(intersections, soloSets);
+
+    // plot the upset plot
+    console.log(allData)
+    plotUpset(allData, soloSets, "upsetPlot")
   </script>
   
 </body>
