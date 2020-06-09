@@ -14,7 +14,7 @@ It computes each relationship recursively, and sorts decreasing. Tooltips appear
 
 You can either choose to include solo sets with all its data, with the function insertSoloDataAll, or include solo sets with only the values that ARE NOT in other sets with the function insertSoloDataOutersect. You should probably comment out the function you don't want to use. Alternatively, you can comment out both functions, to not include any of the solo sets.
 
-Demo at https://chuntul.github.io/#4, where the data given is:
+Demo at http://bl.ocks.org/chuntul/f211d4c0ffa12cbadfb601e230341721, where the data given is:
 ```javascript
  const data = [
       {
