@@ -10,7 +10,7 @@ const data = {
 }
 ```
 
-It computes each relationship recursively, and sorts decreasing.
+It computes each relationship recursively, and sorts decreasing. Tooltips appear when hovering over the bars.
 
 You can either choose to include solo sets with all its data, with the function insertSoloDataAll, or include solo sets with only the values that ARE NOT in other sets with the function insertSoloDataOutersect. You should probably comment out the function you don't want to use. Alternatively, you can comment out both functions, to not include any of the solo sets.
 
