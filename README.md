@@ -3,18 +3,35 @@
 A function that creates an UpSet plot in d3. An UpSet plot is a substitute for a Venn diagrams - you can easily view relationships between multiple sets. 
 
 Takes in:
-- sets: [ ] -> array of set names
-- names: [ [ ], [ ], ...] -> an array of arrays (in order by set names) of objects in each set
+```javascript
+const data = {
+  "name": "name of set",
+  "values": ["A", "B"] 
+}
+```
 
-It computes each relationship automatically, and sorts decreasing.
+It computes each relationship recursively, and sorts decreasing.
+
+You can either choose to include solo sets with all its data, with the function insertSoloDataAll, or include solo sets with only the values that ARE NOT in other sets with the function insertSoloDataOutersect. You should probably comment out the function you don't want to use. Alternatively, you can comment out both functions, to not include any of the solo sets.
 
 Demo at https://chuntul.github.io/#4, where the data given is:
 ```javascript
-var sets = ["set1", "set2", "set3", "set4"]
-var items = [
-                ["a","b","c","d"],
-                ["a","b","c","d", "e", "f"],
-                ["a","b","g", "h", "i"],
-                ["a","i", "j","c","d"]
-            ]
+ const data = [
+      {
+        "name": "set1",
+        "values": ["a","b","c","d"]
+      },
+      {
+        "name": "set2",
+        "values": ["a","b","c","d", "e", "f"]
+      },
+      {
+        "name": "set3",
+        "values": ["a","b","g", "h", "i"]
+      },
+      {
+        "name": "set4",
+        "values": ["a","i", "j","c","d"]
+      }
+];
 ```
