@@ -39,12 +39,12 @@
     const {intersections, soloSets} = formatIntersectionData(data); 
 
     // putting the solo sets in:
-    // to include solo sets with all its data, call this function
-    const allData = insertSoloDataAll(intersections, soloSets);
+      // to include solo sets with all its data, call this function
+      // const allData = insertSoloDataAll(intersections, soloSets);
 
-    // to include solo sets with only the values that ARE NOT in other sets
-    // ie. the outersect of values in the solo sets, call this function
-    // const allData = insertSoloDataOutersect(intersections, soloSets);
+      // to include solo sets with only the values that ARE NOT in other sets
+      // ie. the outersect of values in the solo sets, call this function
+      const allData = insertSoloDataOutersect(intersections, soloSets);
 
     // plot the upset plot
     console.log(allData)

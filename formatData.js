@@ -66,3 +66,22 @@ const insertSoloDataAll = (intersections, soloSets) => {
     });
     return intersections;
 };
+
+// include solo sets with only the values that ARE NOT in other sets
+const insertSoloDataOutersect = (intersections, soloSets) => {
+    soloSets.forEach(x => {
+        // compile all unique values from other sets except current set
+        const otherSets = [...new Set(soloSets.map(y => y.setName === x.setName ? [] : y.values).flat())];
+        
+        // subtract otherSets values from current set values
+        const values = x.values.filter(y => !otherSets.includes(y));
+        intersections.push({
+            name: x.name,
+            setName: x.setName,
+            num: values.length,
+            values: values,
+        })
+        
+    })
+    return intersections;
+}
