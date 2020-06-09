@@ -4,10 +4,10 @@ A function that creates an UpSet plot in d3. An UpSet plot is a substitute for a
 
 Takes in:
 ```javascript
-const data = {
+const data = [{
   "name": "name of set",
   "values": ["A", "B"] 
-}
+}]
 ```
 
 It computes each relationship recursively, and sorts decreasing. Tooltips appear when hovering over the bars.
